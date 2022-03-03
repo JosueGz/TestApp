@@ -41,6 +41,7 @@ export const ListScreen = ({navigation}: Props) => {
 		  navigation.replace('LoginScreen');
 	}
 
+
 	
 	const { cryptosEnLista, isLoading } = useCryptos();
 	const { top } = useSafeAreaInsets();
@@ -60,7 +61,7 @@ export const ListScreen = ({navigation}: Props) => {
 		
 		<>
 		
-		<Text style = {loginStyles.titlel}>Bienvenido: {name}</Text>
+		<Text style = {loginStyles.titlel}>Bienvenido:{name}</Text>
 		<View style={{ flex:1, marginHorizontal:10, marginTop:15}}>
 			<FlatList 
 				data={list}

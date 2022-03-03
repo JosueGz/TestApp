@@ -46,7 +46,8 @@ export const loginStyles = StyleSheet.create({
         borderColor: 'black',
         paddingHorizontal: 20,
         paddingVertical: 5,
-        borderRadius: 100
+        borderRadius: 100,
+        marginTop: 2
     },
     buttontext:{
         fontSize: 15,
@@ -67,7 +68,7 @@ export const loginStyles = StyleSheet.create({
         paddingHorizontal: 30,
         justifyContent: 'center',
         height: 90,
-        marginBottom: 0
+        marginBottom: 30
     }
 
 

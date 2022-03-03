@@ -21,7 +21,7 @@ export const ListProvider = ({children}: any) => {
     
 
     const loadList = async() => {
-        const resp = await cryptoDB.get<CryptoDB>('tickers/?start=1&limit=50');
+        const resp = await cryptoDB.get<CryptoDB>('tickers/?limit=50');
         setList([...resp.data.data]);
         // setList([...list, ...resp.data.data]);
     }
