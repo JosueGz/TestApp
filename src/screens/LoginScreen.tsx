@@ -1,30 +1,63 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, Button, ActivityIndicator, Platform } from 'react-native';
+import { View, Text, Button, ActivityIndicator, Platform, KeyboardAvoidingView, Keyboard, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import cryptoDB from '../api/cryptoDB';
 import { CryptoDB } from '../interfaces/cryptoInterface';
 import { useCryptos } from '../hooks/useCryptos';
 import { Background } from '../components/Background';
 import { loginStyles } from '../theme/loginTheme';
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { useForm } from '../hooks/useForm';
+import { StackScreenProps } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export const LoginScreen = () => {
+interface Props extends StackScreenProps<any , any>{
 
-	const navigation = useNavigation();
-	const [textInputName, setTextInputName] = useState('');
-	const checkTextInput = () => {
-		
-		if (!textInputName.trim()) {
-		  alert('Porfavor ingrese un usuario');
-		  return;
-		}
-		
-		navigation.navigate('ListScreen');
-	  };
+}
+const storeData = async (value) =>{
+	try {
+		await AsyncStorage.setItem('user',value)
+	  } catch(e) {
+		console.log('mal.')
+	  }
+	  console.log('Done.')
+	
+}
+
+export const LoginScreen = ({navigation}: Props) => {
+	
+
+	const {user, onChange} = useForm({
+		user: '',
+	});
+	
+	
+
+	const onLogin = () => {
+		storeData(user);
+		Keyboard.dismiss();
+		// console.log(user);
+		if (!user.trim()) {
+			alert('Porfavor ingrese un usuario');
+			return;
+		  }
+		  
+		  
+		  navigation.replace('Crypto');
+		  
+	}
+
+	
+
+	
+
 	return(
 		<>
 		<Background />
+		<KeyboardAvoidingView
+			style={{ flex:1 }}
+			behavior={ (Platform.OS === 'ios') ? 'padding' : 'height' }
+		>
 		<View style={ loginStyles.formContainer}>
 			<Text style = {loginStyles.title}>Usuario </Text>
 			<TextInput 
@@ -39,15 +72,15 @@ export const LoginScreen = () => {
 				selectionColor="white"
 				autoCapitalize="none"
 				autoCorrect={false}
-				onChangeText={
-					(value) => setTextInputName(value)
-				  }
+				onChangeText={(value) => onChange(value,'user')}
+				value={ user }
+				onSubmitEditing={onLogin}
 			/>
 			<View style={loginStyles.buttonc}>
 				<TouchableOpacity
 					activeOpacity={0.8}
 					style={ loginStyles.button}
-					onPress={checkTextInput}
+					onPress={onLogin}
 				>
 					<Text style={loginStyles.buttontext}>
 						Login
@@ -56,6 +89,7 @@ export const LoginScreen = () => {
 				</TouchableOpacity>
 			</View>
 		</View>
+		</KeyboardAvoidingView>
 		</>
 	)
 }
