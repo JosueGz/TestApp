@@ -13,8 +13,11 @@ import { ListContext } from '../context/ListContext';
 import { ListStackParams } from '../navigation/CryptosNavigation';
 
 interface Props extends StackScreenProps<ListStackParams, 'ListScreen'>{};
+
 export const ListScreen = ({navigation}: Props) => {
+
 	const [name, setName] =useState([]);
+
 	const getData = async () => {
 		try {
 		  const value = await AsyncStorage.getItem('user')
@@ -61,7 +64,7 @@ export const ListScreen = ({navigation}: Props) => {
 		
 		<>
 		
-		<Text style = {loginStyles.titlel}>Bienvenido:{name}</Text>
+		<Text style = {loginStyles.titlel}>Bienvenido: {name}</Text>
 		<View style={{ flex:1, marginHorizontal:10, marginTop:15}}>
 			<FlatList 
 				data={list}
